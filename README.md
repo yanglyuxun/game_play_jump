@@ -1,6 +1,6 @@
 # Wechat Jump Game Reinforcement Learning
 
-This is a Q learning inplement on Wechat Jump Game. 
+This is a Q learning implement on Wechat Jump Game. 
 
 
 ## Goal
