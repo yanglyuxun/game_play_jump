@@ -91,12 +91,14 @@ def jump(distance):
     '''
     press_time = distance * press_coefficient
     press_time = max(press_time, 200)   # 设置 200ms 是最小的按压时间
-    press_time = int(press_time)
+    press_time = int(press_time+random.randrange(-30,30))
+    x = swipe_x1+random.randrange(-20,20)
+    y = swipe_y1+random.randrange(-20,20)
     cmd = 'adb shell input swipe {x1} {y1} {x2} {y2} {duration}'.format(
-        x1=swipe_x1,
-        y1=swipe_y1,
-        x2=swipe_x2,
-        y2=swipe_y2,
+        x1=x,
+        y1=y,
+        x2=x,
+        y2=y,
         duration=press_time
     )
     print(cmd)
@@ -245,17 +247,18 @@ def main():
 
     i, next_rest, next_rest_time = 0, random.randrange(3, 10), random.randrange(5, 10)
     while True:
-        pull_screenshot()
-        im = Image.open('./autojump.png')
+        process = subprocess.Popen('adb shell screencap -p', shell=True, stdout=subprocess.PIPE)
+        img_bytes = process.stdout.read()
+        im = Image.open(Image.io.BytesIO(img_bytes))
         # 获取棋子和 board 的位置
         piece_x, piece_y, board_x, board_y = find_piece_and_board(im)
         ts = int(time.time())
         print(ts, piece_x, piece_y, board_x, board_y)
         set_button_position(im)
         jump(math.sqrt((board_x - piece_x) ** 2 + (board_y - piece_y) ** 2))
-        if debug_switch:
-            debug.save_debug_screenshot(ts, im, piece_x, piece_y, board_x, board_y)
-            debug.backup_screenshot(ts)
+#        if debug_switch:
+#            debug.save_debug_screenshot(ts, im, piece_x, piece_y, board_x, board_y)
+#            debug.backup_screenshot(ts)
         i += 1
         if i == next_rest:
             print('已经连续打了 {} 下，休息 {}s'.format(i, next_rest_time))
@@ -265,7 +268,7 @@ def main():
                 time.sleep(1)
             print('\n继续')
             i, next_rest, next_rest_time = 0, random.randrange(30, 100), random.randrange(10, 60)
-        time.sleep(random.uniform(0.9, 1.2))   # 为了保证截图的时候应落稳了，多延迟一会儿，随机值防 ban
+        time.sleep(random.uniform(0.9, 2))   # 为了保证截图的时候应落稳了，多延迟一会儿，随机值防 ban
 
 
 if __name__ == '__main__':
