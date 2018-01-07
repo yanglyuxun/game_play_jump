@@ -21,7 +21,7 @@ The data I used to feed the model include *current states (pixels), actions, nex
 (see Memory_checker.ipynb for more examples).
 
 
-### Model structure
+## Model structure
 
 I used a CNN for training. See the model structure below.
 
