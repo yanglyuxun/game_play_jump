@@ -1,6 +1,6 @@
 # Wechat Jump Game Reinforcement Learning
 
-This is a Q learning implement on Wechat Jump Game. 
+This is a reinforcement learning implement on Wechat Jump Game. 
 
 
 ## Goal
@@ -12,11 +12,11 @@ The purpose is not for solving this specific game. Actually, Q learning may not 
 
 ![game GIF](imgs/screen.gif) 
 
-The Wechat Jump game is a game in the Wechat Android app. In this game, you need to control the chess piece to jump from one object the the next. The time period of pressing the screen will decide the distance the piece will jump. 
+The Wechat Jump game is a game in the Wechat Android app, by Tencent company. In this game, you need to control the chess piece to jump from one object the the next. The time period of pressing the screen will decide the distance the piece will jump. 
 
 The data I used to feed the model include *current states (pixels), actions, next states(pixels)*, and *rewards*. One example is as following:
 
-![game GIF](imgs/s1.png) -- Take action 6 (one of the discretized actions) --> ![game GIF](imgs/s2.png) --> Reward=1
+![game GIF](imgs/s1.png) -- Take action 6 (one of the discretized actions) --> ![game GIF](imgs/s2.png) --> Reward=1 (the change of the score of the game)
 
 (see Memory_checker.ipynb for more examples).
 
