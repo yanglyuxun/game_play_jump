@@ -5,21 +5,31 @@ This is a Q learning implement on Wechat Jump Game.
 
 ## Goal
 
-The purpose is not for solving this specific game. Acturally, Q learning may not be the most efficient way for this game. It is just my experiment of letting the computer to learn a game from amages directly, without "rule teaching". If you only want to solve this game, there are some pixel analysis which can give much more accurate results. 
+The purpose is not for solving this specific game. Actually, Q learning may not be the most efficient way for this game. It is just my experiment of letting the computer to learn a game from images directly, without "rule teaching". If you only want to solve this game, there are some pixel analysis which can give much more accurate results. 
 
 
-## Summary
+## The game
 
-I used a CNN for training. See the model structure below.
+![game GIF](imgs/screen.gif) 
 
-The input is the pixel matrix of the useful area, and the output is the Q function value for different actions. The action is the duration length of the press (which is used to control the jump distance in the game). The press time is between 300-1200 ms, and is descreted into 15 intervals.
+The Wechat Jump game is a game in the Wechat Android app. In this game, you need to control the chess piece to jump from one object the the next. The time period of pressing the screen will decide the distance the piece will jump. 
 
-The input data is produced from my Android phone with ABD tool. A memory list is used for playback, and each time a batch is fed to the model. 
+The data I used to feed the model include *current states (pixels), actions, next states(pixels)*, and *rewards*. One example is as following:
 
-The data producing is way too slow. So a pixel masking tool is used to generate different rewards to actions for each picture. In theory, it is similar to the data produced by more steps without that additional generation. But it is still very slow.
+![game GIF](imgs/s1.png) -- Take action 6 (one of the discretized actions) --> ![game GIF](imgs/s2.png) --> Reward=1
+
+(see Memory_checker.ipynb for more examples).
 
 
 ### Model structure
+
+I used a CNN for training. See the model structure below.
+
+The input is the pixel matrix of the useful area, and the output is the Q function value for different actions. The action is the duration length of the press (which is used to control the jump distance in the game). The press time is between 300-1200 ms, and is discretized into 15 intervals.
+
+The input data is produced from my Android phone with ADB tools. A memory list is used for playback, and each time a batch is fed to the model. 
+
+The data collecting is way too slow, because one jump takes around a second, and the delay of ADB screen-shot is remarkable. So a pixel masking tool is used to generate different rewards to actions for each picture. In theory, it is similar to the data produced by more steps without that additional generation. But it is still very slow.
 
 <pre>
 _________________________________________________________________
