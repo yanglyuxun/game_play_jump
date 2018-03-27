@@ -91,14 +91,14 @@ def jump(distance):
     '''
     press_time = distance * press_coefficient
     press_time = max(press_time, 200)   # 设置 200ms 是最小的按压时间
-    press_time = int(press_time+random.randrange(-30,30))
-    x = swipe_x1+random.randrange(-20,20)
-    y = swipe_y1+random.randrange(-20,20)
+    press_time = int(press_time+random.randrange(-80,80))
+    #x = swipe_x1+random.randrange(-200,200)
+    #y = swipe_y1+random.randrange(-200,200)
     cmd = 'adb shell input swipe {x1} {y1} {x2} {y2} {duration}'.format(
-        x1=x,
-        y1=y,
-        x2=x,
-        y2=y,
+        x1=swipe_x1+random.randrange(-200,200),
+        y1=swipe_y1+random.randrange(-200,200),
+        x2=swipe_x1+random.randrange(-200,200),
+        y2=swipe_y1+random.randrange(-200,200),
         duration=press_time
     )
     print(cmd)
